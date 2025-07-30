@@ -155,36 +155,3 @@ arcpy.management.CopyFeatures(joined_shapefile, output_filename)
 #: Delete extra fields
 arcpy.management.DeleteField(output_filename, ["OID_", "ZIP5_1"])
 
-
-# #: Read in empty zip code shapefile as spatial dataframe
-# sdf = pd.DataFrame.spatial.from_featureclass(empty_zipcode_shapefile)
-
-# #: Join merged_df with our attributes to the empty zip code polygons
-# #: Need to use ZIP in sdf and ZIP5 in merged_df to ensure join uses number fields
-# final_sdf = sdf.merge(merged_df, how='left', left_on='ZIP', right_on='ZIP5')
-
-# #: Replace null values with 0s
-# columns = final_sdf.columns.to_list()
-# items_to_remove = ['SHAPE', 'FID', 'COUNTYNBR', 'NAME', 'SYMBOL', 'ZIP', 'ZIP5']
-# keep_columns = [item for item in columns if item not in items_to_remove]
-# column_dictionary = {col_name: 0 for col_name in keep_columns}
-
-# final_clean_sdf = final_sdf.fillna(column_dictionary).copy()
-# final_clean_sdf.ZIP = final_clean_sdf.ZIP.astype(int)
-
-# fix_cols = final_clean_sdf.select_dtypes(include='float64').columns
-# final_clean_sdf[fix_cols] = final_clean_sdf[fix_cols].astype(np.float32)
-
-# #: Write out spatial dataframe to shapefile to load into AGOL
-# if arcpy.Exists('C:\Temp\temp.gdb'):
-#     continue
-# else:
-#     arcpy.management.CreateFileGDB('C:\Temp', 'temp.gdb')
-
-# final_clean_sdf.spatial.to_featureclass(location=output_shapefile)
-# final_clean_sdf.spatial.to_featureclass(location='C:\Temp\temp.gdb\test_fc')
-
-
-# final_clean_sdf.Index.astype(np.int64)
-# gdf = gpd.GeoDataFrame(final_clean_sdf, crs="EPSG:26912", geometry='SHAPE')
-# gdf.to_file(output_shapefile)  
